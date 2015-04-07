@@ -14,9 +14,9 @@ require 'spree/testing_support/controllers'
 
 Sinatra::Base.environment = 'test'
 
-ENV['ABACOS_KEY'] ||= 'key'
-ENV['ABACOS_PRODUCTS_WSDL'] ||= 'http://abacos'
-ENV['ABACOS_BASE_URL'] ||= 'http://abacos.com:8045/WSPlataforma'
+ENV['ABACOS_KEY'] ||= '123'
+ENV['ABACOS_PRODUCTS_WSDL'] ||= 'http://187.120.13.174:8045/AbacosWSProdutos.asmx'
+ENV['ABACOS_BASE_URL'] ||= 'http://187.120.13.174:8045'
 
 VCR.configure do |c|
   c.allow_http_connections_when_no_cassette = false
@@ -33,6 +33,10 @@ end
 RSpec.configure do |config|
   config.include Rack::Test::Methods
   config.include Spree::TestingSupport::Controllers
+
+  config.before(:all, type: :request) do
+    WebMock.allow_net_connect!
+  end  
 
   config.filter_run_excluding :broken => true
 end

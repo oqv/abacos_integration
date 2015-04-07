@@ -4,10 +4,10 @@ require "endpoint_base"
 require File.expand_path(File.dirname(__FILE__) + '/lib/abacos_integration')
 
 class AbacosEndpoint < EndpointBase::Sinatra::Base
-  Honeybadger.configure do |config|
-    config.api_key = ENV['HONEYBADGER_KEY']
-    config.environment_name = ENV['RACK_ENV']
-  end if ENV['HONEYBADGER_KEY'].present?
+  # Honeybadger.configure do |config|
+  #   config.api_key = ENV['HONEYBADGER_KEY']
+  #   config.environment_name = ENV['RACK_ENV']
+  # end if ENV['HONEYBADGER_KEY'].present?
 
   post "/get_products" do
     products = AbacosIntegration::Product.new(@config).fetch

@@ -23,7 +23,7 @@ Gem::Specification.new do |s|
   s.add_dependency "tilt", "~> 1.4.1"
   s.add_dependency "tilt-jbuilder"
   s.add_dependency "endpoint_base"
-  s.add_dependency "honeybadger"
+  # s.add_dependency "honeybadger"
   s.add_dependency "savon"
   
   s.add_development_dependency "sqlite3"
