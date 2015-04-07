@@ -11,16 +11,31 @@ require 'abacos/order'
 module AbacosIntegration
   class Base
     attr_reader :config
+    mattr_accessor :key
+    @@key = "123"
+
+    mattr_accessor :products_wsdl
+    @@products_wsdl = "http://187.120.13.174:8045/AbacosWSProdutos.asmx"
+
+    mattr_accessor :base_url
+    @@base_url = "http://187.120.13.174:8045/WSPlataforma"
+
+    mattr_accessor :des3_key
+    @@des3_key = "122318298301283812932133"
+
+    mattr_accessor :des3_iv
+    @@des3_iv = "122318298301283812932133"
 
     def initialize(config = {})
-      config = {}
-      config[:abacos_key] = "123"
-      config[:abacos_base_path] = "http://187.120.13.174:8045/WSPlataforma"
       @config = config
 
-      Abacos.key = config[:abacos_key]
-      Abacos.base_path = config[:abacos_base_path]
+      Abacos.key = @@key#config[:abacos_key]
+      Abacos.base_path = @@base_url#config[:abacos_base_path]
       Abacos.base_path_only = config[:abacos_base_path_only].to_s == "true" || config[:abacos_base_path_only].to_s == "1"
+    end
+
+    def self.setup
+      yield self
     end
   end
 end

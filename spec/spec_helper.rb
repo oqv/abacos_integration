@@ -16,7 +16,10 @@ Sinatra::Base.environment = 'test'
 
 ENV['ABACOS_KEY'] ||= '123'
 ENV['ABACOS_PRODUCTS_WSDL'] ||= 'http://187.120.13.174:8045/AbacosWSProdutos.asmx'
-ENV['ABACOS_BASE_URL'] ||= 'http://187.120.13.174:8045'
+ENV['ABACOS_BASE_URL'] ||= 'http://187.120.13.174:8045/WSPlataforma'
+
+ENV['ABACOS_DES3_KEY'] ||= '122318298301283812932133'
+ENV['ABACOS_DES3_IV'] ||= '11239129083012980382923'
 
 VCR.configure do |c|
   c.allow_http_connections_when_no_cassette = false

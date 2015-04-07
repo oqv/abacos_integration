@@ -19,6 +19,8 @@ describe AbacosEndpoint do
 
     VCR.use_cassette "435324532345" do
       post "/get_products", request.to_json, auth
+      puts json_response #Explode o json na tela.
+      puts config
       expect(json_response[:summary]).to match "products from Ábacos"
       expect(json_response[:products].count).to be >= 1
       expect(last_response.status).to eq 200
