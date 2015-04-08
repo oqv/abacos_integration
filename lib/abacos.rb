@@ -14,12 +14,17 @@ class Abacos
   #   e.g. http://187.120.13.174:8045/AbacosWSClientes.asmx
   #
   class << self
+    @@base_url ||= "http://downloads.smartbear.com/samples/testcomplete10/webservices/Service"
+    @@key ||= "122318298301283812932133"
+    @@des3_key ||= "122318298301283812932133"
+    @@des3_ivx ||= "122318298301283812932133"
+
     def key=(key)
       @@key = key
     end
 
     def base_path=(base_path)
-      @@base_path = base_path
+      @@base_path ||= base_path
     end
 
     @@webservice = "AbacosWSProdutos"
@@ -289,9 +294,9 @@ class Abacos
 
     def wsdl_url
       if base_path_only
-        "#{@@base_path}.asmx?wsdl"
+        "#{@@base_url}.asmx?wsdl"
       else
-        "#{@@base_path}/#{@@webservice}.asmx?wsdl"
+        "#{@@base_url}/#{@@webservice}.asmx?wsdl"
       end
     end
 
@@ -308,11 +313,12 @@ class Abacos
         log_level: :info,
         pretty_print_xml: true,
         read_timeout: 200,
-        log: false
+        log: true
       )
     end
 
     def available_service(endpoint)
+
       response = client.call(endpoint, message: { "ChaveIdentificacao" => @@key })
       result = response.body[:"#{endpoint}_response"][:"#{endpoint}_result"]
 
