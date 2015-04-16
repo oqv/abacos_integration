@@ -2,8 +2,8 @@ module AbacosIntegration
   class Product < Base
     attr_reader :product_payload, :variants_payload
 
-    def initialize(config = {}, payload = {})
-      super config
+    def initialize(configuration = {}, payload = {})
+      super configuration
       @product_payload = payload[:product] || {}
       @variants_payload = product_payload[:variants] || {}
     end
@@ -71,7 +71,7 @@ module AbacosIntegration
     end
 
     def fetch_price(product_id)
-      if ["1", "true", 1].include? config[:abacos_fetch_price].to_s
+      if ["1", "true", 1].include? AbacosIntegration.configuration.abacos_fetch_price.to_s
         if price = prices.find { |p| p[:codigo_produto] == product_id }
           { price: price[:preco_tabela], promotional_price: price[:preco_promocional] }
         else

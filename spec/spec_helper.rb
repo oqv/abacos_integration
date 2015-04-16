@@ -28,9 +28,9 @@ VCR.configure do |c|
 
   # c.force_utf8_encoding = true
 
-  c.filter_sensitive_data("ABACOS_KEY") { ENV["ABACOS_KEY"] }
-  c.filter_sensitive_data("ABACOS_PRODUCTS_WSDL") { ENV["ABACOS_PRODUCTS_WSDL"] }
-  c.filter_sensitive_data("ABACOS_BASE_URL") { ENV["ABACOS_BASE_URL"] }
+  # c.filter_sensitive_data("ABACOS_KEY") { ENV["ABACOS_KEY"] }
+  # c.filter_sensitive_data("ABACOS_PRODUCTS_WSDL") { ENV["ABACOS_PRODUCTS_WSDL"] }
+  # c.filter_sensitive_data("ABACOS_BASE_URL") { ENV["ABACOS_BASE_URL"] }
 end
 
 RSpec.configure do |config|
@@ -39,7 +39,7 @@ RSpec.configure do |config|
 
   config.before(:all, type: :request) do
     WebMock.allow_net_connect!
-  end  
+  end
 
   config.filter_run_excluding :broken => true
 end
