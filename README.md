@@ -5,15 +5,15 @@ AbacosIntegration - Setup e Utilização
 
 **Setup:**
 
-1. Instale a gem no projeto através do Github.
+- Instale a gem no projeto através do Github.
 ```ruby
     gem 'abacos_integration', github: 'oqv/abacos_integration.git'
 ```
-2. Execute o install:
+- Execute o install:
 ```shell
     rails g abacos_integration:install
 ```
-3. Será gerado na pasta do projeto em config/initializers o arquivo: abacos_integration.rb
+- Será gerado na pasta do projeto em config/initializers o arquivo: abacos_integration.rb
 ```ruby
     AbacosIntegration.configure do |config|
       config.abacos_key = "TOKEN"
@@ -23,7 +23,7 @@ AbacosIntegration - Setup e Utilização
     end
 ```
 
-4. Configure o token e a URL do WebService.
+- Configure o token e a URL do WebService.
 
 **Utilização:**
 
