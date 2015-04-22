@@ -7,11 +7,11 @@ require "abacos_integration/version"
 Gem::Specification.new do |s|
   s.name        = "abacos_integration"
   s.version     = AbacosIntegration::VERSION
-  s.authors     = [""]
-  s.email       = [""]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of AbacosIntegration."
-  s.description = "TODO: Description of AbacosIntegration."
+  s.authors     = ["Victor Alencar", "Renê Schneider"]
+  s.email       = ["victor.alencar@oqvestir.com.br", "renews@oqvestir.com.br"]
+  s.homepage    = "https://github.com/oqv/abacos_integration"
+  s.summary     = "Gem para consumo do ERP Abacos."
+  s.description = "Gem para consumo do ERP Abacos através de seus WebServices listados em sua documentação original."
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
@@ -25,6 +25,6 @@ Gem::Specification.new do |s|
   s.add_dependency "endpoint_base"
   # s.add_dependency "honeybadger"
   s.add_dependency "savon"
-  
+
   s.add_development_dependency "sqlite3"
 end
