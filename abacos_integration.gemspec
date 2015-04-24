@@ -1,3 +1,4 @@
+#encoding: utf-8
 $:.push File.expand_path("../lib", __FILE__)
 
 # Maintain your gem's version:
@@ -7,7 +8,7 @@ require "abacos_integration/version"
 Gem::Specification.new do |s|
   s.name        = "abacos_integration"
   s.version     = AbacosIntegration::VERSION
-  s.authors     = ["Victor Alencar", "Renê Schneider"]
+  s.authors     = ["Victor Alencar", "Rene Schneider"]
   s.email       = ["victor.alencar@oqvestir.com.br", "renews@oqvestir.com.br"]
   s.homepage    = "https://github.com/oqv/abacos_integration"
   s.summary     = "Gem para consumo do ERP Abacos."
