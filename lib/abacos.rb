@@ -108,6 +108,22 @@ class Abacos
       end
     end
 
+    def categories_available
+      @@webservice = "AbacosWSProdutos"
+      result = available_service :categorias_produto_disponiveis
+
+      if rows = result[:rows]
+        if rows[:dados_categorias_produto].is_a?(Array)
+          rows[:dados_categorias_produto]
+        else
+          [rows[:dados_categorias_produto]]
+        end
+      else
+        []
+      end
+
+    end
+
     def families_available
       @@webservice = "AbacosWSProdutos"
       result = available_service :familias_disponiveis
