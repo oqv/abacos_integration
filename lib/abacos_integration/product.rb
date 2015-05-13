@@ -74,6 +74,10 @@ module AbacosIntegration
       @categories = Abacos.categories_available
     end
 
+    def families
+      @families = Abacos.families_available
+    end
+
     def fetch_price(product_id)
       if ["1", "true", 1].include? AbacosIntegration.configuration.abacos_fetch_price.to_s
         if price = prices.find { |p| p[:codigo_produto] == product_id }
