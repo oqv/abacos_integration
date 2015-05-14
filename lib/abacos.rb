@@ -139,6 +139,66 @@ class Abacos
       end
     end
 
+    def groups_available
+      @@webservice = "AbacosWSProdutos"
+      result = available_service :grupo_produtos_disponiveis
+
+      if rows = result[:rows]
+        if rows[:dados_grupos_produtos].is_a?(Array)
+          rows[:dados_grupos_produtos]
+        else
+          [rows[:dados_grupos_produtos]]
+        end
+      else
+        []
+      end
+    end
+
+    def sub_groups_available
+      @@webservice = "AbacosWSProdutos"
+      result = available_service :sub_grupo_produtos_disponiveis
+
+      if rows = result[:rows]
+        if rows[:dados_sub_grupos_produtos].is_a?(Array)
+          rows[:dados_sub_grupos_produtos]
+        else
+          [rows[:dados_sub_grupos_produtos]]
+        end
+      else
+        []
+      end
+    end
+
+    def klasses_available
+      @@webservice = "AbacosWSProdutos"
+      result = available_service :classes_disponiveis
+
+      if rows = result[:rows]
+        if rows[:dados_classes_produtos].is_a?(Array)
+          rows[:dados_classes_produtos]
+        else
+          [rows[:dados_classes_produtos]]
+        end
+      else
+        []
+      end
+    end
+
+    def describers_available
+      @@webservice = "AbacosWSProdutos"
+      result = available_service :descritores_pre_definidos_disponiveis
+
+      if rows = result[:rows]
+        if rows[:dados_descritores_pre_definidos_produtos].is_a?(Array)
+          rows[:dados_descritores_pre_definidos_produtos]
+        else
+          [rows[:dados_descritores_pre_definidos_produtos]]
+        end
+      else
+        []
+      end
+    end
+
     def branding_available
       @@webservice = "AbacosWSProdutos"
       result = available_service :marcas_disponiveis

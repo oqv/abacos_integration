@@ -78,6 +78,26 @@ module AbacosIntegration
       @families = Abacos.families_available
     end
 
+    def groups
+      @groups = Abacos.groups_available
+    end
+
+    def sub_groups
+      @groups = Abacos.sub_groups_available
+    end
+
+    def brands
+      @brands = Abacos.branding_available
+    end
+
+    def klasses
+      @klasses = Abacos.klasses_available
+    end
+
+    def describers
+      @describers = Abacos.describers_available
+    end
+
     def fetch_price(product_id)
       if ["1", "true", 1].include? AbacosIntegration.configuration.abacos_fetch_price.to_s
         if price = prices.find { |p| p[:codigo_produto] == product_id }
