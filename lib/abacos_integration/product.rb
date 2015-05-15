@@ -70,6 +70,10 @@ module AbacosIntegration
       @variants ||= collection.select { |p| p[:codigo_produto_pai] }
     end
 
+    def products
+      @products = Abacos.products_available
+    end
+
     def categories
       @categories = Abacos.categories_available
     end
