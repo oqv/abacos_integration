@@ -37,6 +37,7 @@ module AbacosIntegration
           brand: strip(p[:descricao_marca]),
           family: strip(p[:descricao_familia]),
           taxons: build_taxons(p),
+          taxons_ids: build_taxons_ids(p),
           variants: build_variants(p[:codigo_produto]),
           weight: p[:peso],
           height: p[:altura],
@@ -136,6 +137,16 @@ module AbacosIntegration
       ].compact
 
       [taxons]
+    end
+
+    def build_taxons_ids(product)
+      taxons_ids = [
+        { :brand => product[:codigo_marca] },
+        { :klass => product[:codigo_classe] },
+        { :family => product[:codigo_familia] },
+        { :group => product[:codigo_grupo] },
+        { :subgroup => product[:codigo_sub_grupo] }
+      ]
     end
 
     def variants_by_product_id(product_id)
