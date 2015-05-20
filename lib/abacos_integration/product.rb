@@ -30,6 +30,7 @@ module AbacosIntegration
       parent_products.map do |p|
         {
           id: p[:codigo_produto],
+          acao: p[:acao],
           name: p[:nome_produto],
           sku: p[:codigo_produto],
           description: p[:descricao],
