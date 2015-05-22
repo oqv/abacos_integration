@@ -29,7 +29,7 @@ module AbacosIntegration
     def build_from_parent_products
       parent_products.map do |p|
         {
-          id: p[:codigo_produto],
+          codigo_produto: p[:codigo_produto],
           acao: p[:acao],
           name: p[:nome_produto],
           sku: p[:codigo_produto],
