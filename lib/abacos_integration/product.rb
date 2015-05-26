@@ -73,7 +73,7 @@ module AbacosIntegration
     end
 
     def products
-      @products = Abacos.products_available
+      @products = fetch
     end
 
     def categories
