@@ -44,6 +44,7 @@ module AbacosIntegration
           height: p[:altura],
           width: p[:largura],
           length: p[:comprimento],
+          option_types: build_options_types(p),
           abacos: clean_up_keys(p)
         }.merge fetch_price(p[:codigo_produto])
       end
@@ -113,6 +114,19 @@ module AbacosIntegration
         end
       else
         { price: 0 }
+      end
+    end
+
+    def build_options_types(product)
+      option_types []
+      if rows = product[:descritor_pre_definido][:rows]
+        if rows[:dados_descritor_pre_definido].is_a?(Array)
+          rows[:dados_descritor_pre_definido]
+        else
+          [rows[:dados_descritor_pre_definido]]
+        end
+      else
+        []
       end
     end
 
