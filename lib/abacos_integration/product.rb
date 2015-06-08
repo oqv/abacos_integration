@@ -33,7 +33,7 @@ module AbacosIntegration
           acao: p[:acao],
           name: p[:nome_produto],
           sku: p[:codigo_produto],
-          description: p[:descricao],
+          description: build_description(p),
           class: strip(p[:descricao_classe]),
           brand: strip(p[:descricao_marca]),
           family: strip(p[:descricao_familia]),
@@ -62,6 +62,14 @@ module AbacosIntegration
         end
 
         objects
+      end
+    end
+
+    def build_description(product)
+      if product[:descricao].blank?
+        product[:caracteristicas_complementares][:rows][:dados_caracteristicas_complementares][:texto]
+      else
+        product[:descricao]
       end
     end
 
