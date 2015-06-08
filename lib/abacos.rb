@@ -154,7 +154,7 @@ class Abacos
       end
     end
 
-    def subgroups_available
+    def sub_groups_available
       @@webservice = "AbacosWSProdutos"
       result = available_service :sub_grupo_produtos_disponiveis
 

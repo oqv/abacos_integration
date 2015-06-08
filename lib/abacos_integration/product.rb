@@ -118,7 +118,7 @@ module AbacosIntegration
     end
 
     def build_options_types(product)
-      option_types []
+      option_types = []
       if rows = product[:descritor_pre_definido][:rows]
         if rows[:dados_descritor_pre_definido].is_a?(Array)
           rows[:dados_descritor_pre_definido]
@@ -139,6 +139,7 @@ module AbacosIntegration
         items[sku] = {
           sku: sku,
           description: v[:descricao],
+          options: build_options_types(v),
           abacos: clean_up_keys(v)
         }.merge fetch_price(v[:codigo_produto])
 
