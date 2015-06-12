@@ -82,7 +82,7 @@ module AbacosIntegration
     end
 
     def products
-      @products = fetch
+      @collection = fetch
     end
 
     def categories
