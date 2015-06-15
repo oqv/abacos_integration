@@ -240,6 +240,37 @@ class Abacos
       confirm_service "estoque", protocol
     end
 
+    # Confirmacoes de recebimento
+    def confirm_brand_received(protocol)
+      @@webservice = "AbacosWSProdutos"
+      confirm_service "marca", protocol
+    end
+
+    def confirm_category_received(protocol)
+      @@webservice = "AbacosWSProdutos"
+      confirm_service "categoria_produto", protocol
+    end
+
+    def confirm_klass_received(protocol)
+      @@webservice = "AbacosWSProdutos"
+      confirm_service "classe", protocol
+    end
+
+    def confirm_group_received(protocol)
+      @@webservice = "AbacosWSProdutos"
+      confirm_service "grupo_produto", protocol
+    end
+
+    def confirm_sub_group_received(protocol)
+      @@webservice = "AbacosWSProdutos"
+      confirm_service "sub_grupo_produto", protocol
+    end
+
+    def confirm_family_received(protocol)
+      @@webservice = "AbacosWSProdutos"
+      confirm_service "familia", protocol
+    end
+
     # Receives a collection of orders and send them to Abacos.
     #
     # Notes:
