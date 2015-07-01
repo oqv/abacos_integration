@@ -189,6 +189,56 @@ module AbacosIntegration
       @abacos_ids ||= collection.map { |p| p[:codigo_produto] }
     end
 
+    def confirm_integration(payload)
+      if payload[:abacos]
+        protocol = payload[:abacos][:protocolo_produto]
+        Abacos.confirm_product_received protocol
+      end
+    end
+
+    def confirm_product_received(protocol)
+      @@webservice = "AbacosWSProdutos"
+      Abacos.confirm_service "produto", protocol
+    end
+
+    # Follows same logic as confirm_product_received
+    def confirm_stock_received(protocol)
+      @@webservice = "AbacosWSProdutos"
+      Abacos.confirm_service "estoque", protocol
+    end
+
+    # Confirmacoes de recebimento
+    def confirm_brand_received(protocol)
+      @@webservice = "AbacosWSProdutos"
+      Abacos.confirm_service "marca", protocol
+    end
+
+    def confirm_category_received(protocol)
+      @@webservice = "AbacosWSProdutos"
+      Abacos.confirm_service "categoria_produto", protocol
+    end
+
+    def confirm_klass_received(protocol)
+      @@webservice = "AbacosWSProdutos"
+      Abacos.confirm_service "classe", protocol
+    end
+
+    def confirm_group_received(protocol)
+      @@webservice = "AbacosWSProdutos"
+      Abacos.confirm_service "grupo_produto", protocol
+    end
+
+    def confirm_sub_group_received(protocol)
+      @@webservice = "AbacosWSProdutos"
+      Abacos.confirm_service "sub_grupo_produto", protocol
+    end
+
+    def confirm_family_received(protocol)
+      @@webservice = "AbacosWSProdutos"
+      Abacos.confirm_service "familia", protocol
+    end
+
+
     private
       def clean_up_keys(hash)
         hash.keys.each do |k|
@@ -202,13 +252,6 @@ module AbacosIntegration
 
       def strip(string)
         string.to_s.strip! || string
-      end
-
-      def confirm_integration(payload)
-        if payload[:abacos]
-          protocol = payload[:abacos][:protocolo_produto]
-          Abacos.confirm_product_received protocol
-        end
       end
 
       def useless_keys

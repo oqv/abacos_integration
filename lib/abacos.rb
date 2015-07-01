@@ -1,18 +1,6 @@
 class Abacos
   class ResponseError < StandardError; end
 
-  # Product Service
-  #
-  #   e.g. http://187.120.13.174:8045/AbacosWSProdutos.asmx
-  #
-  # Order Service
-  #
-  #   e.g. http://187.120.13.174:8045/AbacosWSPedidos.asmx
-  #
-  # Customer Service
-  #
-  #   e.g. http://187.120.13.174:8045/AbacosWSClientes.asmx
-  #
   class << self
     def key=(key)
       @@key = key
@@ -402,6 +390,24 @@ class Abacos
       # end
       "#{@@base_path}.asmx?wsdl"
     end
+    
+    def confirm_service(endpoint_key, protocol)
+      endpoint = "confirmar_recebimento_#{endpoint_key}"
+      response = client.call(
+        endpoint.to_sym, message: { "Protocolo#{endpoint_key.camelize}" => protocol }
+      )
+
+      first_key = :"confirmar_recebimento_#{endpoint_key}_response"
+      second_key = :"confirmar_recebimento_#{endpoint_key}_result"
+      result = response.body[first_key][second_key]
+
+      # NOTE Check if there's a exception_message key here
+      if result[:tipo] != "tdreSucesso"
+        raise ResponseError, "Could not confirm record was received with protocol '#{protocol}'. Cod. #{result[:codigo]}, #{result[:descricao]}, (Tipo: #{result[:tipo]})"
+      end
+
+      true
+    end
 
     private
 
@@ -429,24 +435,6 @@ class Abacos
       end
 
       result
-    end
-
-    def confirm_service(endpoint_key, protocol)
-      endpoint = "confirmar_recebimento_#{endpoint_key}"
-      response = client.call(
-        endpoint.to_sym, message: { "Protocolo#{endpoint_key.camelize}" => protocol }
-      )
-
-      first_key = :"confirmar_recebimento_#{endpoint_key}_response"
-      second_key = :"confirmar_recebimento_#{endpoint_key}_result"
-      result = response.body[first_key][second_key]
-
-      # NOTE Check if there's a exception_message key here
-      if result[:tipo] != "tdreSucesso"
-        raise ResponseError, "Could not confirm record was received with protocol '#{protocol}'. Cod. #{result[:codigo]}, #{result[:descricao]}, (Tipo: #{result[:tipo]})"
-      end
-
-      true
     end
   end
 end
