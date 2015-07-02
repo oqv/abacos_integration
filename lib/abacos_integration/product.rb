@@ -233,7 +233,7 @@ module AbacosIntegration
       Abacos.confirm_service "grupo_produto", protocol
     end
 
-    def confirm_sub_group_received(protocol)
+    def confirm_subgroup_received(protocol)
       @@webservice = "AbacosWSProdutos"
       Abacos.confirm_service "sub_grupo_produto", protocol
     end
