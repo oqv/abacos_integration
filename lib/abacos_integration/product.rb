@@ -218,6 +218,11 @@ module AbacosIntegration
       Abacos.confirm_service "categoria_produto", protocol
     end
 
+    def confirm_describer_received(protocol)
+      @@webservice = "AbacosWSProdutos"
+      Abacos.confirm_service "descritor_pre_definido", protocol
+    end
+
     def confirm_klass_received(protocol)
       @@webservice = "AbacosWSProdutos"
       Abacos.confirm_service "classe", protocol
