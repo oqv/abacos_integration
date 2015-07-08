@@ -201,6 +201,11 @@ module AbacosIntegration
       Abacos.confirm_service "produto", protocol
     end
 
+    def confirm_productvariant_received(protocol)
+      @@webservice = "AbacosWSProdutos"
+      Abacos.confirm_service "produto", protocol
+    end
+
     # Follows same logic as confirm_product_received
     def confirm_stock_received(protocol)
       @@webservice = "AbacosWSProdutos"
