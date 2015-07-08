@@ -63,6 +63,11 @@ class Abacos
       confirm_service "produto", protocol
     end
 
+    def confirm_productvariant_received(protocol)
+      @@webservice = "AbacosWSProdutos"
+      confirm_service "produto", protocol
+    end
+
     def price_online(product_ids = [])
       @@webservice = "AbacosWSProdutos"
       response = client.call(
@@ -390,7 +395,7 @@ class Abacos
       # end
       "#{@@base_path}.asmx?wsdl"
     end
-    
+
     def confirm_service(endpoint_key, protocol)
       endpoint = "confirmar_recebimento_#{endpoint_key}"
       response = client.call(
