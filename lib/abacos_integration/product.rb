@@ -138,6 +138,22 @@ module AbacosIntegration
       end
     end
 
+    def get_category_from_hash(product)
+      categories = []
+      ids = []
+      if rows = product[:categorias_do_site][:rows]
+        if rows[:dados_categorias_do_site].is_a?(Array)
+          categories = rows[:dados_categorias_do_site]
+        else
+          categories = rows[:dados_categorias_do_site]
+        end
+      end
+      categories.each do |category|
+        ids << category[:codigo_categoria] if category[:codigo_categoria].to_i > 0
+      end
+      ids
+    end
+
     def build_variants(product_id)
       variants = variants_by_product_id product_id
 
@@ -169,7 +185,8 @@ module AbacosIntegration
         { :klass => product[:codigo_classe] },
         { :family => product[:codigo_familia] },
         { :group => product[:codigo_grupo] },
-        { :subgroup => product[:codigo_sub_grupo] }
+        { :subgroup => product[:codigo_sub_grupo] },
+        { :category => get_category_from_hash(product)}
       ]
     end
 
