@@ -149,7 +149,8 @@ module AbacosIntegration
         end
       end
       categories.each do |category|
-        ids << category[:codigo_categoria] if category[:codigo_categoria].to_i > 0
+        category_id = category[:codigo_categoria].to_i rescue 0
+        ids << category_id if category_id > 0
       end
       ids
     end
