@@ -1,3 +1,3 @@
 module AbacosIntegration
-  VERSION = "0.0.25"
+  VERSION = "0.0.30"
 end
