@@ -190,7 +190,7 @@ module AbacosIntegration
         { :klass => product[:codigo_classe] },
         { :family => product[:codigo_familia] },
         { :group => product[:codigo_grupo] },
-        { :subgroup => product[:codigo_sub_grupo] },
+        { :sub_group => product[:codigo_sub_grupo] },
         { :category => get_category_from_hash(product)}
       ]
     end
