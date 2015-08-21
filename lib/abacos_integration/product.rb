@@ -34,6 +34,7 @@ module AbacosIntegration
           name: p[:nome_produto],
           sku: p[:codigo_produto],
           description: build_description(p),
+          modeling: build_modeling(p),
           class: strip(p[:descricao_classe]),
           brand: strip(p[:descricao_marca]),
           family: strip(p[:descricao_familia]),
@@ -67,9 +68,21 @@ module AbacosIntegration
 
     def build_description(product)
       if product[:descricao].blank?
-        product[:caracteristicas_complementares][:rows][:dados_caracteristicas_complementares][:texto]
+        if product[:caracteristicas_complementares][:rows][:dados_caracteristicas_complementares].is_a?(Array)
+          product[:caracteristicas_complementares][:rows][:dados_caracteristicas_complementares][0][:texto]
+        else
+          product[:caracteristicas_complementares][:rows][:dados_caracteristicas_complementares][:texto]
+        end
       else
         product[:descricao]
+      end
+    end
+
+    def build_modeling(product)
+      if product[:caracteristicas_complementares][:rows][:dados_caracteristicas_complementares].is_a?(Array)
+        product[:caracteristicas_complementares][:rows][:dados_caracteristicas_complementares][1][:texto]
+      else
+        ""
       end
     end
 
