@@ -36,6 +36,7 @@ module AbacosIntegration
 end
 
 require 'abacos_integration/product'
+require 'abacos_integration/price'
 require 'abacos_integration/stock'
 require 'abacos_integration/order'
 require 'abacos_integration/shipment'

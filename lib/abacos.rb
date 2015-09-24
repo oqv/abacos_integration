@@ -210,6 +210,16 @@ class Abacos
     def prices_available
       @@webservice = "AbacosWSProdutos"
       result = available_service :precos_disponiveis
+
+      if rows = result[:rows]
+        if rows[:dados_preco].is_a?(Array)
+          rows[:dados_preco]
+        else
+          [rows[:dados_preco]]
+        end
+      else
+        []
+      end
     end
 
     def stocks_available
@@ -262,6 +272,11 @@ class Abacos
     def confirm_family_received(protocol)
       @@webservice = "AbacosWSProdutos"
       confirm_service "familia", protocol
+    end
+
+    def confirm_price_received(protocol)
+      @@webservice = "AbacosWSProdutos"
+      confirm_service "preco", protocol
     end
 
     # Receives a collection of orders and send them to Abacos.
