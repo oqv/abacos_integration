@@ -283,6 +283,11 @@ module AbacosIntegration
       Abacos.confirm_service "familia", protocol
     end
 
+    def confirm_price_received(protocol)
+      @@webservice = "AbacosWSProdutos"
+      Abacos.confirm_service "preco", protocol
+    end
+
 
     private
       def clean_up_keys(hash)
