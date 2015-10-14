@@ -20,10 +20,11 @@ module AbacosIntegration
     # so here we need to make sure only parents products are returned with
     # their variants nested in the object
     def fetch
-      handled_collection = build_from_parent_products
-      parent_ids = handled_collection.map { |p| p[:id] }
+      # handled_collection = build_from_parent_products
+      # parent_ids = handled_collection.map { |p| p[:id] }
 
-      handled_collection + build_from_missing_parents(parent_ids)
+      # handled_collection + build_from_missing_parents(parent_ids)
+      build_from_parent_products + build_from_variants
     end
 
     def build_from_parent_products
@@ -40,7 +41,7 @@ module AbacosIntegration
           family: strip(p[:descricao_familia]),
           taxons: build_taxons(p),
           taxons_ids: build_taxons_ids(p),
-          variants: build_variants(p[:codigo_produto]),
+          # variants: build_variants(p[:codigo_produto]),
           weight: p[:peso],
           height: p[:altura],
           width: p[:largura],
@@ -48,6 +49,20 @@ module AbacosIntegration
           option_types: build_options_types(p),
           abacos: clean_up_keys(p)
         }.merge fetch_price(p[:codigo_produto])
+      end
+    end
+
+    def build_from_variants
+      variants_parent_ids = variants.map { |v| v[:codigo_produto_pai] }.uniq
+
+      variants_parent_ids.inject([]) do |objects, parent|
+
+        objects.push(
+          id: parent,
+          variants: build_variants(parent)
+        )
+
+        objects
       end
     end
 
