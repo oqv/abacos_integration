@@ -177,7 +177,7 @@ module AbacosIntegration
         if rows[:dados_categorias_do_site].is_a?(Array)
           categories = rows[:dados_categorias_do_site]
         else
-          categories = rows[:dados_categorias_do_site]
+          categories = [rows[:dados_categorias_do_site]]
         end
       end
       categories.each do |category|
