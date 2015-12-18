@@ -28,10 +28,14 @@ class Abacos
     attr_reader :attributes, :translated
 
     @@mappings = {
-      "address1" => "Logradouro",
-      "state" => "Estado",
+      "street" => "Logradouro",
+      "state_uf" => "Estado",
       "city" => "Municipio",
-      "zipcode" => "Cep"
+      "zip_code" => "Cep",
+      "number" => "NumeroLogradouro",
+      "kind" => "TipoLocalEntrega",
+      "neighborhood" => "Bairro",
+      "complement" => "ComplementoEndereco"
     }
 
     attr_reader *@@mappings.keys
@@ -45,8 +49,8 @@ class Abacos
       end
     end
 
-    def address1=(value)
-      @address1 = translated["Logradouro"] = value
+    def street=(value)
+      @street = translated["Logradouro"] = value
     end
 
     def state=(value)
@@ -57,8 +61,8 @@ class Abacos
       @city = translated["Municipio"] = value
     end
 
-    def zipcode=(value)
-      @zipcode = translated["Cep"] = value
+    def zip_code=(value)
+      @zip_code = translated["Cep"] = value
     end
   end
 end
