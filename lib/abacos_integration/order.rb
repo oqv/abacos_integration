@@ -1,15 +1,16 @@
 module AbacosIntegration
   class Order < Base
-    attr_reader :order_payload, :shipping_address_payload
+    attr_reader :order_payload
 
-    def initialize(config, payload = {})
+    def initialize(config, payload)
       super config
-      @order_payload = payload[:order] || {}
-      @shipping_address_payload = order_payload[:shipping_address] || {}
+      @order_payload = payload
+      @order_payload = JSON.parse(@order_payload).symbolize_keys if @order_payload.is_a? String
+      @order_payload = @order_payload[:order].deep_symbolize_keys if @order_payload.is_a? Hash
     end
 
     def create
-      send_customer_info
+      #send_customer_info
       Abacos.add_orders [build_order.translated]
     end
 
@@ -32,44 +33,54 @@ module AbacosIntegration
     end
 
     def build_order
+      order_payload[:line_items] = []
+      order_payload[:payments] = []
+      
+      # Products
+      order_payload[:order_products].each do |product|
+        # line = Abacos::Line.new product
+        # line.price_ref ||= line.price
+        # line.price_unit ||= line.price
+        product[:price_unit] ||= product[:price]
+        product[:price_ref] ||= product[:price]
+        order_payload[:line_items] << product
+      end
+
+      # Payments
+      order_payload[:order_payments].each do |payment|
+        # pay = Abacos::Payment.new payment
+        order_payload[:payments] << payment
+      end
+
       order = Abacos::Order.new order_payload
-      order.shipping = order_payload[:totals][:shipping]
-      order.total = order_payload[:totals][:item]
+      #order.shipping = order_payload[:totals][:shipping]
+      #order.total = order_payload[:totals][:item]
 
-      placed_on = Abacos::Helper.parse_timestamp order_payload[:placed_on]
-      order.placed_on = placed_on
-      order.paid = order_payload[:paid] || true
+      created_at = Abacos::Helper.parse_timestamp order_payload[:created_at]
+      order.created_at = created_at
 
-      if order.paid
-        order.paid_at = if order_payload[:paid_at]
-                          Abacos::Helper.parse_timestamp order_payload[:paid_at]
-                        else
-                          placed_on
-                        end
-      end
+      # Defaults. These are preconfigured on Abacos
+      order.commercialization_kind ||= 1
+      order.shipment_service_id ||= "Transp [Direct]"
+      order.shipment_service ||= "Transp [Direct]"
+      order.paid_status ||= false
+      order.nf_paulista ||= true
+      order.fake_invoice ||= false
+      order.charges_total ||= 0
 
-
-      if order_payload[:totals][:discount]
-        order.discount = order_payload[:totals][:discount]
-      end
-
-      order.shipping_name = "#{shipping_address_payload[:firstname]} #{shipping_address_payload[:lastname]}"
-      order.shipping_address1 = shipping_address_payload[:address1]
-      order.shipping_address2 = shipping_address_payload[:address2]
-      order.shipping_city = shipping_address_payload[:city]
-      order.shipping_state = shipping_address_payload[:state]
-      order.shipping_zipcode = shipping_address_payload[:zipcode]
-
-      # MOAR Defaults. These are preconfigured on Abacos
-      #
-      order.seller_id ||= 1
-      order.ship_carrier ||= "Transp [Direct]"
-      order.ship_service ||= "Transp [Direct]"
-
-      unless order.payments.empty?
-        order.payments.first.payment_method_id ||= 25
-        order.payments.first.installment_plan_number ||= 1
-      end
+      # Address data
+      order.contact = order_payload[:order_address][:contact]
+      order.contact_phone = order_payload[:order_address][:phone]
+      order.contact_cpf = order_payload[:order_address][:contact_cpf]
+      order.contact_type_abacos = order_payload[:order_address][:contact_type_abacos]
+      order.address_street = order_payload[:order_address][:street]
+      order.address_number = order_payload[:order_address][:number]
+      order.address_complement = order_payload[:order_address][:complement]
+      order.address_neighborhood = order_payload[:order_address][:neighborhood]
+      order.address_city = order_payload[:order_address][:city]
+      order.address_state = order_payload[:order_address][:state]
+      order.address_zip_code = order_payload[:order_address][:zip_code]
+      order.address_type_abacos = order_payload[:order_address][:address_type_abacos]
 
       order
     end

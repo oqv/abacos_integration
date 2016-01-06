@@ -13,18 +13,27 @@ class Abacos
     attr_reader :attributes
 
     @@mappings = {
-      "payment_method_id" => "FormaPagamentoCodigo",
-      "installment_plan_number" => "CartaoQtdeParcelas",
-      "amount" => "Valor"
+      "payment_abacos_method" => "FormaPagamentoCodigo",
+      "total" => "Valor",
+      "credit_card_number" => "CartaoNumero",
+      "credit_card_code" => "CartaoCodigoSeguranca",
+      "credit_card_expire_date" => "CartaoValidade",
+      "credit_card_name" => "CartaoNomeImpresso",
+      "credit_card_cpf" => "CartaoCPFouCNPJTitular",
+      "installments" => "CartaoQtdeParcelas",
+      "pre_authorized" => "PreAutorizadaNaPlataforma"
     }
 
     attr_reader *@@mappings.keys
 
     def initialize(attributes = {})
+      
       @attributes = attributes
+      @attributes.deep_stringify_keys!
       @translated = {}
 
       @@mappings.each do |k, v|
+
         if attributes[k]
           instance_variable_set("@#{k}", @translated[v] = attributes[k])
         end

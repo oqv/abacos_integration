@@ -37,30 +37,43 @@ class Abacos
   class Order
     attr_reader :attributes
 
-    # NOTE There's a huge number of attributes still to be mapped here ..
     @@mappings = {
+      # Dados do cliente
       "id" => "NumeroDoPedido",
-      "email" => "EMail",
-      "status" => "CodigoStatus",
-      "cpf_or_cnpj" => "CPFouCNPJ",
+      "email" => "Email",
+      "cpf" => "CPFouCNPJ",
+      "rg" => "DestDocumento",
+      "client_code_abacos" => "CodigoCliente",
+      # Dados do Pedido
       "total" => "ValorPedido",
-      "shipping" => "ValorFrete",
-      "discount" => "ValorDesconto",
-      "placed_on" => "DataVenda",
-      "seller_id" => "RepresentanteVendas",
-      "ship_carrier" => "Transportadora",
-      "ship_service" => "ServicoEntrega",
-      "paid" => "PedidoJaPago",
-      "paid_at" => "DataDoPagamento",
-      "shipping_name" => "DestNome",
-      "shipping_phone" => "DestTelefone",
-      "shipping_email" => "DestEmail",
-      "shipping_address1" => "DestLogradouro",
-      "shipping_address2" => "DestComplementoEndereco",
-      "shipping_city" => "DestMunicipio",
-      "shipping_state" => "DestEstado",
-      "shipping_zipcode" => "DestCep",
-      "shipping_country" => "DestPais"
+      "shipment_total" => "ValorFrete",
+      "charges_total" => "ValorEncargos",
+      "promo_total" => "ValorDesconto",
+      "gift_package_total" => "ValorEmbalagemPresente",
+      "created_at" => "DataVenda",
+      "shipment_service_id" => "Transportadora",
+      "shipment_service" => "ServicoEntrega",
+      "fake_invoice" => "EmitirNotaSimbolica",
+      "promo_total_coupon" => "ValorCupomDesconto",
+      # Dados de Entrega
+      "contact" => "DestNome",
+      "contact_phone" => "DestTelefone",
+      "contact_cpf" => "DestCPF",
+      "contact_type_abacos" => "DestTipoPessoa", # [tpeIndefinido, tpeFisica, tpeJuridica]
+      "address_street" => "DestLogradouro",
+      "address_number" => "DestNumeroLogradouro",
+      "address_complement" => "DestComplementoEndereco",
+      "address_neighborhood" => "DestBairro",
+      "address_city" => "DestMunicipio",
+      "address_state" => "DestEstado",
+      "address_zip_code" => "DestCep",
+      "address_type_abacos" => "DestTipoLocalEntrega", # [tleeDesconhecido, tleeResidencial, tleeComercial]
+      "paid_status" => "PedidoJaPago",
+      "nf_paulista" => "OptouNFPaulista",
+      "gift_card_total" => "ValorTotalCartaoPresente",
+      "gift_card_freebie" => "CartaoPresenteBrinde",
+      "shipment_time" => "TempoEntregaTransportadora",
+      "commercialization_kind" => "ComercializacaoOutrasSaidas"
     }
 
     @@obj_mappings = {
@@ -79,6 +92,7 @@ class Abacos
 
     def initialize(attributes = {})
       @attributes = attributes
+
       @translated = {}
 
       @@mappings.each do |k, v|
@@ -92,11 +106,12 @@ class Abacos
       end
 
       @@obj_mappings.each do |k, v|
+
         klass, translation = v.split
 
         instance_variable_set("@#{k}", [])
 
-        (attributes[k] || []).each do |line|
+        (attributes[k.to_sym] || []).each do |line|
           instance = klass.constantize.new line
           @translated[translation] ||= []
 
