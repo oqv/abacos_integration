@@ -21,7 +21,8 @@ class Abacos
       "credit_card_name" => "CartaoNomeImpresso",
       "credit_card_cpf" => "CartaoCPFouCNPJTitular",
       "installments" => "CartaoQtdeParcelas",
-      "pre_authorized" => "PreAutorizadaNaPlataforma"
+      "pre_authorized" => "PreAutorizadaNaPlataforma",
+      "exp_date" => "BoletoVencimento"
     }
 
     attr_reader *@@mappings.keys

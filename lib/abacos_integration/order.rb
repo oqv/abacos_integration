@@ -49,6 +49,7 @@ module AbacosIntegration
       # Payments
       order_payload[:order_payments].each do |payment|
         # pay = Abacos::Payment.new payment
+        payment[:exp_date] = Abacos::Helper.parse_timestamp(payment[:exp_date]) rescue nil
         order_payload[:payments] << payment
       end
 
@@ -60,11 +61,12 @@ module AbacosIntegration
       order.created_at = created_at
 
       # Defaults. These are preconfigured on Abacos
-      order.commercialization_kind ||= 1
-      order.shipment_service_id ||= "Transp [Direct]"
-      order.shipment_service ||= "Transp [Direct]"
+      order.commercialization_kind ||= '1'
+      order.seller_id = '1'
+      order.shipment_service_id ||= "83"
+      #order.shipment_service ||= order.shipment_service_id
       order.paid_status ||= false
-      order.nf_paulista ||= true
+      order.nf_paulista ||= 'tbneSim'
       order.fake_invoice ||= false
       order.charges_total ||= 0
 

@@ -39,11 +39,11 @@ class Abacos
 
     @@mappings = {
       # Dados do cliente
-      "id" => "NumeroDoPedido",
       "email" => "Email",
       "cpf" => "CPFouCNPJ",
       "rg" => "DestDocumento",
       "client_code_abacos" => "CodigoCliente",
+      "order_number" => "NumeroDoPedido",
       # Dados do Pedido
       "total" => "ValorPedido",
       "shipment_total" => "ValorFrete",
@@ -73,7 +73,8 @@ class Abacos
       "gift_card_total" => "ValorTotalCartaoPresente",
       "gift_card_freebie" => "CartaoPresenteBrinde",
       "shipment_time" => "TempoEntregaTransportadora",
-      "commercialization_kind" => "ComercializacaoOutrasSaidas"
+      "commercialization_kind" => "ComercializacaoOutrasSaidas",
+      "seller_id" => "RepresentanteVendas"
     }
 
     @@obj_mappings = {
@@ -96,8 +97,9 @@ class Abacos
       @translated = {}
 
       @@mappings.each do |k, v|
-        if attributes[k]
-          instance_variable_set("@#{k}", @translated[v] = attributes[k])
+        
+        if attributes[k.to_sym]
+          instance_variable_set("@#{k}", @translated[v] = attributes[k.to_sym])
         end
 
         self.class.send(:define_method, "#{k}=") do |value|

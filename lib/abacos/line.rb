@@ -12,7 +12,7 @@ class Abacos
     attr_reader :attributes
 
     @@mappings = {
-      "product_id" => "CodigoProduto",
+      "sku" => "CodigoProduto",
       "quantity" => "QuantidadeProduto",
       "price" => "PrecoUnitario",
       "is_gift" => "EmbalagemPresente",
