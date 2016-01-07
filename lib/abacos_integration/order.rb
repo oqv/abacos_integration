@@ -27,8 +27,8 @@ module AbacosIntegration
       end
     end
 
-    def confirm!
-      protocol = order_payload[:abacos][:protocolo_status_pedido]
+    def confirm!(protocol=nil)
+      protocol ||= order_payload[:abacos][:protocolo_status_pedido]
       Abacos.confirm_order_status_received protocol
     end
 

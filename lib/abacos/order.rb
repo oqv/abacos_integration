@@ -39,9 +39,9 @@ class Abacos
 
     @@mappings = {
       # Dados do cliente
-      "email" => "Email",
-      "cpf" => "CPFouCNPJ",
-      "rg" => "DestDocumento",
+      "client_email" => "Email",
+      "client_cpf" => "CPFouCNPJ",
+      "client_rg" => "DestDocumento",
       "client_code_abacos" => "CodigoCliente",
       "order_number" => "NumeroDoPedido",
       # Dados do Pedido
