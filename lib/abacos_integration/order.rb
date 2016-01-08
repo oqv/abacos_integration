@@ -2,11 +2,13 @@ module AbacosIntegration
   class Order < Base
     attr_reader :order_payload
 
-    def initialize(config, payload)
+    def initialize(config, payload={})
       super config
-      @order_payload = payload
-      @order_payload = JSON.parse(@order_payload).symbolize_keys if @order_payload.is_a? String
-      @order_payload = @order_payload[:order].deep_symbolize_keys if @order_payload.is_a? Hash
+      if payload.present?
+        @order_payload = payload
+        @order_payload = JSON.parse(@order_payload).symbolize_keys if @order_payload.is_a? String
+        @order_payload = @order_payload[:order].deep_symbolize_keys if @order_payload.is_a? Hash
+      end
     end
 
     def create
@@ -49,7 +51,8 @@ module AbacosIntegration
       # Payments
       order_payload[:order_payments].each do |payment|
         # pay = Abacos::Payment.new payment
-        payment[:exp_date] = Abacos::Helper.parse_timestamp(payment[:exp_date]) rescue nil
+        #payment[:credit_card_expire_date] = Abacos::Helper.parse_timestamp(payment[:credit_card_expire_date]) rescue nil
+        payment[:credit_card_expire_date] = payment[:credit_card_expire_date].to_date.strftime('%d/%m/%Y') rescue nil
         order_payload[:payments] << payment
       end
 
@@ -60,8 +63,10 @@ module AbacosIntegration
       created_at = Abacos::Helper.parse_timestamp order_payload[:created_at]
       order.created_at = created_at
 
+      order.client_code ||= order.client_cpf
+
       # Defaults. These are preconfigured on Abacos
-      order.commercialization_kind ||= '1'
+      order.commercialization_kind ||= '0'
       order.seller_id = '1'
       order.shipment_service_id ||= "83"
       #order.shipment_service ||= order.shipment_service_id
@@ -69,6 +74,7 @@ module AbacosIntegration
       order.nf_paulista ||= 'tbneSim'
       order.fake_invoice ||= false
       order.charges_total ||= 0
+      order.shipment_total_pay ||= order.shipment_total
 
       # Address data
       order.contact = order_payload[:order_address][:contact]
