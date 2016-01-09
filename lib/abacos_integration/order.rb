@@ -51,7 +51,7 @@ module AbacosIntegration
       # Payments
       order_payload[:order_payments].each do |payment|
         # pay = Abacos::Payment.new payment
-        #payment[:credit_card_expire_date] = Abacos::Helper.parse_timestamp(payment[:credit_card_expire_date]) rescue nil
+        payment[:exp_date] = Abacos::Helper.parse_timestamp(payment[:exp_date]) rescue nil
         payment[:credit_card_expire_date] = payment[:credit_card_expire_date].to_date.strftime('%d/%m/%Y') rescue nil
         order_payload[:payments] << payment
       end
