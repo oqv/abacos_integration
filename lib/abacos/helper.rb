@@ -14,6 +14,11 @@ class Abacos
         time.strftime "%d%m%Y %H:%M:%S.%L"
       end
 
+      def parse_creditcard_time(string)
+        time = Time.parse string
+        time.strftime "%m%Y"
+      end
+
       def encrypt(data)
         cipher = OpenSSL::Cipher.new('des3')
         cipher.encrypt
