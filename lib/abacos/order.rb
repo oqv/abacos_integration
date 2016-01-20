@@ -59,7 +59,7 @@ class Abacos
       # Dados de Entrega
       "client_name" => "DestNome",
       "contact_phone" => "DestTelefone",
-      "client_cpf" => "DestCPF",
+      "address_client_cpf" => "DestCPF",
       "contact_type_abacos" => "DestTipoPessoa", # [tpeIndefinido, tpeFisica, tpeJuridica]
       "address_street" => "DestLogradouro",
       "address_number" => "DestNumeroLogradouro",

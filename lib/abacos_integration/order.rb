@@ -76,11 +76,14 @@ module AbacosIntegration
       order.charges_total ||= 0
       order.shipment_total_pay ||= order.shipment_total
 
+
+
       # Address data
       #order.contact = order_payload[:order_address][:contact]
       order.contact_phone = order_payload[:order_address][:phone]
       #order.contact_cpf = order_payload[:order_address][:contact_cpf]
       order.contact_type_abacos = order_payload[:order_address][:contact_type_abacos]
+      order.address_client_cpf ||= order.client_cpf
       order.address_street = order_payload[:order_address][:street]
       order.address_number = order_payload[:order_address][:number]
       order.address_complement = order_payload[:order_address][:complement]
