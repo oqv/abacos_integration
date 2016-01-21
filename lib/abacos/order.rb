@@ -58,6 +58,7 @@ class Abacos
       "promo_total_coupon" => "ValorCupomDesconto",
       # Dados de Entrega
       "client_name" => "DestNome",
+      "contact_email" => "DestEmail",
       "contact_phone" => "DestTelefone",
       "address_client_cpf" => "DestCPF",
       "contact_type_abacos" => "DestTipoPessoa", # [tpeIndefinido, tpeFisica, tpeJuridica]

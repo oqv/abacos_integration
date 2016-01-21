@@ -81,6 +81,7 @@ module AbacosIntegration
       # Address data
       #order.contact = order_payload[:order_address][:contact]
       order.contact_phone = order_payload[:order_address][:phone]
+      order.contact_email ||= order.client_email
       #order.contact_cpf = order_payload[:order_address][:contact_cpf]
       order.contact_type_abacos = order_payload[:order_address][:contact_type_abacos]
       order.address_client_cpf ||= order.client_cpf
