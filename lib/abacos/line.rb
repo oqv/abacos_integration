@@ -1,11 +1,11 @@
 class Abacos
   #
   #   {
-  #     "DadosPedidosItem" => {
+  #     "DadosPedidosItem" => [{
   #       "CodigoProduto" => "3104376",
   #       "QuantidadeProduto" => 1,
   #       "PrecoUnitario" => 100
-  #     }
+  #     }]
   #   }
   #
   class Line
@@ -41,7 +41,7 @@ class Abacos
     end
 
     def translated
-      { "DadosPedidosItem" => @translated }
+      @translated
     end
   end
 end

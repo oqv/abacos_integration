@@ -46,7 +46,7 @@ class Abacos
     end
 
     def translated
-      { "DadosPedidosFormaPgto" => @translated }
+      @translated
     end
   end
 end

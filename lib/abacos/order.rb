@@ -116,11 +116,19 @@ class Abacos
         instance_variable_set("@#{k}", [])
 
         (attributes[k.to_sym] || []).each do |line|
+
+          horse_key = 'DadosPedidosItem' if klass.eql?('Abacos::Line')
+          horse_key = 'DadosPedidosFormaPgto' if klass.eql?('Abacos::Payment')
+
           instance = klass.constantize.new line
-          @translated[translation] ||= []
+          @translated[translation] ||= {}
+          @translated[translation][horse_key] ||= []
 
           instance_variable_get("@#{k}").push instance
-          @translated[translation].push instance.translated
+          @translated[translation][horse_key].push instance.translated
+
+          # DadosPedidosFormaPgto, #DadosPedidosItem
+
         end
       end
     end
