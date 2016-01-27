@@ -22,7 +22,12 @@ class Abacos
       "price_ref" => "ValorReferencia"
     }
 
+    @@obj_mappings = {
+      "personalizations" => "Abacos::LinePersonalization Personalizacao"
+    }
+
     attr_reader *@@mappings.keys
+    attr_reader *@@obj_mappings.keys
 
     def initialize(attributes = {})
       @attributes = attributes
@@ -38,6 +43,27 @@ class Abacos
           instance_variable_set("@#{k}",  @translated[v] = value)
         end
       end
+
+      @@obj_mappings.each do |k, v|
+
+        klass, translation = v.split
+
+        instance_variable_set("@#{k}", [])
+
+        (attributes[k] || []).each do |line|
+
+          horse_key = 'DadosPedidosItemPersonalizacao' if klass.eql?('Abacos::LinePersonalization')
+
+          instance = klass.constantize.new line
+          @translated[translation] ||= {}
+          @translated[translation][horse_key] ||= []
+
+          instance_variable_get("@#{k}").push instance
+          @translated[translation][horse_key].push instance.translated
+
+        end
+      end
+
     end
 
     def translated
