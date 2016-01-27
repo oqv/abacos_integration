@@ -7,6 +7,7 @@ require 'abacos/customer'
 require 'abacos/line'
 require 'abacos/payment'
 require 'abacos/order'
+require 'abacos/line_personalization'
 require 'abacos_integration/configuration'
 
 module AbacosIntegration

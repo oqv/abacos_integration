@@ -45,6 +45,11 @@ module AbacosIntegration
         # line.price_unit ||= line.price
         product[:price_unit] ||= product[:price]
         product[:price_ref] ||= product[:price]
+        product[:price] = (product[:price].to_f - product[:promo_total].to_f)
+        #if product[:price].to_f != product[:price_unit].to_f
+        #  product[:personalizations] = []
+        #  product[:personalizations] << { price_liquid: product[:price], sku: product[:sku] }
+        #end
         order_payload[:line_items] << product
       end
 
@@ -59,6 +64,8 @@ module AbacosIntegration
       order = Abacos::Order.new order_payload
       #order.shipping = order_payload[:totals][:shipping]
       #order.total = order_payload[:totals][:item]
+      order.product_total = order.product_total.to_f
+      order.product_total -= order_payload[:promo_total].to_f
 
       created_at = Abacos::Helper.parse_timestamp order_payload[:created_at]
       order.created_at = created_at
@@ -75,8 +82,6 @@ module AbacosIntegration
       order.fake_invoice ||= false
       order.charges_total ||= 0
       order.shipment_total_pay ||= order.shipment_total
-
-
 
       # Address data
       #order.contact = order_payload[:order_address][:contact]

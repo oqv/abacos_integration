@@ -49,7 +49,7 @@ class Abacos
       "shipment_total" => "ValorFrete",
       "shipment_total_pay" => "ValorFretePagar",
       "charges_total" => "ValorEncargos",
-      "promo_total" => "ValorDesconto",
+      "discount" => "ValorDesconto",
       "gift_package_total" => "ValorEmbalagemPresente",
       "created_at" => "DataVenda",
       "shipment_service_id" => "Transportadora",
