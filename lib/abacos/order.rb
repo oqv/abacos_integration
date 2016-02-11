@@ -74,7 +74,7 @@ class Abacos
       "nf_paulista" => "OptouNFPaulista",
       "gift_card_total" => "ValorTotalCartaoPresente",
       "gift_card_freebie" => "CartaoPresenteBrinde",
-      "shipment_time" => "TempoEntregaTransportadora",
+      "delivery_time" => "TempoEntregaTransportadora",
       "commercialization_kind" => "ComercializacaoOutrasSaidas",
       "seller_id" => "RepresentanteVendas"
     }
