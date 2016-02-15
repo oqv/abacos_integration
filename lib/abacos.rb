@@ -237,6 +237,14 @@ class Abacos
       end
     end
 
+    def stocks_online(sku)
+      @@webservice = "AbacosWSProdutos"
+
+      response = client.call(
+        :estoque_on_line_saldo, message: { "CodigosProduto" => sku, "ChaveIdentificacao" => @@key }
+      ).body
+    end
+
     # Follows same logic as confirm_product_received
     def confirm_stock_received(protocol)
       @@webservice = "AbacosWSProdutos"

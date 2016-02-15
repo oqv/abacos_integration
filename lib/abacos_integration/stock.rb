@@ -28,6 +28,10 @@ module AbacosIntegration
       end
     end
 
+    def stock_online(sku)
+      Abacos.stocks_online(sku)
+    end
+
     def confirm!
       protocol = inventory_payload[:abacos][:protocolo_estoque]
       Abacos.confirm_stock_received protocol
