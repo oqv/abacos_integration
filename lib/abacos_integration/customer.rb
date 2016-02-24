@@ -12,7 +12,9 @@ module AbacosIntegration
     }
 
     @@obj_mappings = {
-      "billing_address" => "Abacos::Address Endereco"
+      "billing_address" => "Abacos::Address EndCobranca",
+      "shipping_address" => "Abacos::Address EndEntrega",
+      "main_address" => "Abacos::Address Endereco"
     }
 
     @@composed_mappings = {
@@ -66,8 +68,20 @@ module AbacosIntegration
 
     def billing_address=(address)
       @billing_address = Abacos::Address.new(address)
-      @translated["Endereco"] = @billing_address.translated
+      @translated["EndCobranca"] = @billing_address.translated
       @billing_address
+    end
+
+    def shipping_address=(address)
+      @shipping_address = Abacos::Address.new(address)
+      @translated["EndEntrega"] = @billing_address.translated
+      @shipping_address
+    end
+
+    def main_address=(address)
+      @main_address = Abacos::Address.new(address)
+      @translated["Endereco"] = @billing_address.translated
+      @main_address
     end
 
     def translated
