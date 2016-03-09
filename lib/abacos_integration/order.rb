@@ -46,7 +46,8 @@ module AbacosIntegration
           order_payload[:value_discounts] += promotion[:value_discount].to_f
         end
 
-        order_payload[:value_discounts_per_product] = order_payload[:value_discounts] / order_payload[:order_products].map{ |p| p[:quantity].to_i }.inject(:+)
+        valid_products_quantity = order_payload[:order_products].map{ |p| p[:is_freebie] == true ? 0 : p[:quantity].to_i }.inject(:+)
+        order_payload[:value_discounts_per_product] = order_payload[:value_discounts] / valid_products_quantity
       end
       
       # Products
