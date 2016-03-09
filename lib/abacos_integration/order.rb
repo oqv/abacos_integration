@@ -57,7 +57,9 @@ module AbacosIntegration
         # line.price_unit ||= line.price
         product[:price_unit] ||= product[:price]
         product[:price_ref] ||= product[:price]
-        product[:price] = (product[:price].to_f - (product[:promo_total].to_f/product[:quantity]) - order_payload[:value_discounts_per_product])
+        product[:price] = (product[:price].to_f - (product[:promo_total].to_f/product[:quantity]))
+        product[:price] -= order_payload[:value_discounts_per_product] unless product[:is_freebie]
+
         #if product[:price].to_f != product[:price_unit].to_f
         #  product[:personalizations] = []
         #  product[:personalizations] << { price_liquid: product[:price], sku: product[:sku] }
