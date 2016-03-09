@@ -37,6 +37,17 @@ module AbacosIntegration
     def build_order
       order_payload[:line_items] = []
       order_payload[:payments] = []
+      order_payload[:value_discounts] = 0
+      order_payload[:value_discounts_per_product] = 0
+
+      # Value discounts
+      if order_payload[:order_promotions].present?
+        order_payload[:order_promotions].each do |promotion|
+          order_payload[:value_discounts] += promotion[:value_discount].to_f
+        end
+
+        order_payload[:value_discounts_per_product] = order_payload[:value_discounts] / order_payload[:order_products].map{ |p| p[:quantity].to_i }.inject(:+)
+      end
       
       # Products
       order_payload[:order_products].each do |product|
@@ -45,7 +56,7 @@ module AbacosIntegration
         # line.price_unit ||= line.price
         product[:price_unit] ||= product[:price]
         product[:price_ref] ||= product[:price]
-        product[:price] = (product[:price].to_f - (product[:promo_total].to_f/product[:quantity]))
+        product[:price] = (product[:price].to_f - (product[:promo_total].to_f/product[:quantity]) - order_payload[:value_discounts_per_product])
         #if product[:price].to_f != product[:price_unit].to_f
         #  product[:personalizations] = []
         #  product[:personalizations] << { price_liquid: product[:price], sku: product[:sku] }
@@ -66,6 +77,8 @@ module AbacosIntegration
       #order.total = order_payload[:totals][:item]
       order.product_total = order.product_total.to_f
       order.product_total -= order_payload[:promo_total].to_f
+      # era pra ser o jeito certo, mas~
+      # order.discount = order_payload[:value_discounts]
 
       created_at = Abacos::Helper.parse_timestamp order_payload[:created_at]
       order.created_at = created_at
