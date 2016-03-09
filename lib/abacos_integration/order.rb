@@ -38,7 +38,6 @@ module AbacosIntegration
       order_payload[:line_items] = []
       order_payload[:payments] = []
       order_payload[:value_discounts] = 0
-      order_payload[:value_discounts_per_product] = 0
 
       # Value discounts
       if order_payload[:order_promotions].present?
