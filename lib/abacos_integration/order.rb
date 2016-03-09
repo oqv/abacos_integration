@@ -45,9 +45,6 @@ module AbacosIntegration
         order_payload[:order_promotions].each do |promotion|
           order_payload[:value_discounts] += promotion[:value_discount].to_f
         end
-
-        valid_products_quantity = order_payload[:order_products].map{ |p| p[:is_freebie] == true ? 0 : p[:quantity].to_i }.inject(:+)
-        order_payload[:value_discounts_per_product] = order_payload[:value_discounts] / valid_products_quantity
       end
       
       # Products
@@ -58,7 +55,14 @@ module AbacosIntegration
         product[:price_unit] ||= product[:price]
         product[:price_ref] ||= product[:price]
         product[:price] = (product[:price].to_f - (product[:promo_total].to_f/product[:quantity]))
-        product[:price] -= order_payload[:value_discounts_per_product] unless product[:is_freebie]
+
+        unless product[:is_freebie]
+          # we need the price without modifications to make the magic, so, we use "price_ref"
+          price_in_order = product[:price_ref].to_f * product[:quantity].to_f
+          percent_in_order = price_in_order * 100.0 / order_payload[:product_total].to_f
+
+          product[:price] -= (order_payload[:value_discounts] * percent_in_order / 100.0) / product[:quantity].to_f
+        end
 
         #if product[:price].to_f != product[:price_unit].to_f
         #  product[:personalizations] = []
