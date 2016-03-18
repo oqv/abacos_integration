@@ -118,6 +118,9 @@ module AbacosIntegration
       order.address_zip_code = order_payload[:order_address][:zip_code]
       order.address_type_abacos = order_payload[:order_address][:address_type_abacos]
 
+      order.quote_id = order_payload[:quote_id]
+      order.shipment_cost_price = order_payload[:shipment_cost_price]
+
       order
     end
 

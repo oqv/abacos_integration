@@ -92,11 +92,18 @@ class Abacos
 
     attr_reader *@@mappings.keys
     attr_reader *@@obj_mappings.keys
+    attr_accessor :quote_id
+    attr_accessor :shipment_cost_price
 
     def initialize(attributes = {})
       @attributes = attributes
 
       @translated = {}
+
+      # Quote ID from Intelipost and delivery cost prince
+      if attributes[:quote_id].present? && attributes[:shipment_cost_price].present?
+        @translated['Anotacao3'] = "#{attributes[:quote_id]}_#{attributes[:shipment_cost_price]}"
+      end
 
       @@mappings.each do |k, v|
         
@@ -109,6 +116,14 @@ class Abacos
         end
       end
 
+      # If order was paid with credits alone
+      if attributes[:payments].size == 1 && attributes[:payments].first[:kind] == 'credit'
+        @translated.delete('PrazoEntregaPosPagamento')
+
+        @translated['DataPrazoEntregaInicial'] = 0
+        @translated['DataPrazoEntregaFinal'] = attributes[:delivery_time]
+      end
+
       @@obj_mappings.each do |k, v|
 
         klass, translation = v.split
@@ -116,7 +131,6 @@ class Abacos
         instance_variable_set("@#{k}", [])
 
         (attributes[k.to_sym] || []).each do |line|
-
           horse_key = 'DadosPedidosItem' if klass.eql?('Abacos::Line')
           horse_key = 'DadosPedidosFormaPgto' if klass.eql?('Abacos::Payment')
 
