@@ -120,7 +120,7 @@ class Abacos
       if attributes[:payments].size == 1 && attributes[:payments].first[:kind] == 'credit'
         @translated.delete('PrazoEntregaPosPagamento')
 
-        @translated['DataPrazoEntregaInicial'] = 0
+        @translated['DataPrazoEntregaInicial'] = Abacos::Helper.parse_timestamp(attributes[:created_at])
         @translated['DataPrazoEntregaFinal'] = attributes[:delivery_time]
       end
 
