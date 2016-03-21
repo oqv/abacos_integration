@@ -117,12 +117,12 @@ class Abacos
       end
 
       # If order was paid with credits alone
-      if attributes[:payments].size == 1 && attributes[:payments].first[:kind] == 'credit'
-        @translated.delete('PrazoEntregaPosPagamento')
+      # if attributes[:payments].size == 1 && attributes[:payments].first[:kind] == 'credit'
+      #   @translated.delete('PrazoEntregaPosPagamento')
 
-        @translated['DataPrazoEntregaInicial'] = Abacos::Helper.parse_timestamp(attributes[:created_at])
-        @translated['DataPrazoEntregaFinal'] = attributes[:delivery_time]
-      end
+      #   @translated['DataPrazoEntregaInicial'] = Abacos::Helper.parse_timestamp(attributes[:created_at])
+      #   @translated['DataPrazoEntregaFinal'] = attributes[:delivery_time]
+      # end
 
       @@obj_mappings.each do |k, v|
 
