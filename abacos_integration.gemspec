@@ -26,6 +26,7 @@ Gem::Specification.new do |s|
   s.add_dependency "endpoint_base"
   # s.add_dependency "honeybadger"
   s.add_dependency "savon"
+  s.add_dependency "business_time"
 
   s.add_development_dependency "sqlite3"
 end
