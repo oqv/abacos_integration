@@ -96,7 +96,7 @@ module AbacosIntegration
       order.seller_id = '1'
       order.shipment_service_id ||= "83"
       #order.shipment_service ||= order.shipment_service_id
-      order.paid_status ||= false
+      order.paid_status = order_payload[:order_statuses].select { |order_status| order_status[:status] == 'paid' }.present?
       order.nf_paulista ||= 'tbneSim'
       order.fake_invoice ||= false
       order.charges_total ||= 0
