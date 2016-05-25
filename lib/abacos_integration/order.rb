@@ -91,12 +91,15 @@ module AbacosIntegration
 
       order.client_code ||= order.client_cpf
 
+      paid_status = order_payload[:order_statuses].find { |order_status| order_status[:status] == 'paid' }
+
       # Defaults. These are preconfigured on Abacos
       order.commercialization_kind ||= '0'
       order.seller_id = '1'
       order.shipment_service_id ||= "83"
       #order.shipment_service ||= order.shipment_service_id
-      order.paid_status ||= false
+      order.paid_status = paid_status.present?
+      order.payment_date = paid_status.present? ? Abacos::Helper.parse_timestamp(paid_status[:created_at]) : nil
       order.nf_paulista ||= 'tbneSim'
       order.fake_invoice ||= false
       order.charges_total ||= 0
