@@ -324,6 +324,35 @@ class Abacos
       response
     end
 
+    def update_order_status(*args)
+      @@webservice = "AbacosWSPedidos"
+
+      options = args.extract_options!
+      response = client.call(
+        :confirmar_pagamentos_pedidos,
+        message: {
+          "ChaveIdentificacao" => @@key,
+          "ListaDePagamentos" => {
+            "DadosPgtoPedido" => {
+              "NumeroPedido" => options['number'],
+              "DataPagamento" => options['date'],
+              "StatusPagamento" => options['status']
+            }
+          }
+        }
+      )
+
+      result = response.body[:confirmar_pagamentos_pedidos_response][:confirmar_pagamentos_pedidos_result]
+
+      if result[:resultado_operacao][:tipo] != "tdreSucesso"
+        error = result[:rows][:dados_pgto_pedido_resultado][:resultado]
+        message = "#{error[:codigo]}. #{error[:exception_message]}. \n#{error[:descricao]}"
+        raise ResponseError, message
+      end
+
+      response
+    end
+
     # Return general Order updates
     # ps. don't know what we use this for ..
     def orders_available
