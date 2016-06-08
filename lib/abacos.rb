@@ -328,26 +328,49 @@ class Abacos
       @@webservice = "AbacosWSPedidos"
 
       options = args.extract_options!
-      response = client.call(
-        :confirmar_pagamentos_pedidos,
-        message: {
-          "ChaveIdentificacao" => @@key,
-          "ListaDePagamentos" => {
-            "DadosPgtoPedido" => {
-              "NumeroPedido" => options['number'],
-              "DataPagamento" => options['date'],
-              "StatusPagamento" => options['status']
+
+      if options['status'] == 'speConfirmado'
+        response = client.call(
+          :confirmar_pagamentos_pedidos,
+          message: {
+            "ChaveIdentificacao" => @@key,
+            "ListaDePagamentos" => {
+              "DadosPgtoPedido" => {
+                "NumeroPedido" => options['number'],
+                "DataPagamento" => options['date'],
+                "StatusPagamento" => options['status']
+              }
             }
           }
-        }
-      )
+        )
 
-      result = response.body[:confirmar_pagamentos_pedidos_response][:confirmar_pagamentos_pedidos_result]
+        result = response.body[:confirmar_pagamentos_pedidos_response][:confirmar_pagamentos_pedidos_result]
 
-      if result[:resultado_operacao][:tipo] != "tdreSucesso"
-        error = result[:rows][:dados_pgto_pedido_resultado][:resultado]
-        message = "#{error[:codigo]}. #{error[:exception_message]}. \n#{error[:descricao]}"
-        raise ResponseError, message
+        if result[:resultado_operacao][:tipo] != "tdreSucesso"
+          error = result[:rows][:dados_pgto_pedido_resultado][:resultado]
+          message = "#{error[:codigo]}. #{error[:exception_message]}. \n#{error[:descricao]}"
+          raise ResponseError, message
+        end
+      else
+        response = client.call(
+          :cancelar_pedido,
+          message: {
+            "ChaveIdentificacao" => @@key,
+            "DadosCancelamentoPedido" => {
+              "CodigoPedido" => options['number'],
+              "CodigoMotivoCancelamento" => 5,
+              "MensagemCancelamento" => options['cancel_message'] || "Cancel"
+            }
+          }
+        )
+
+        result = response.body[:cancelar_pedido_response][:cancelar_pedido_result]
+
+        if result[:resultado][:tipo] != "tdreSucesso"
+          error = result[:resultado]
+          message = "#{error[:codigo]}. #{error[:exception_message]}. \n#{error[:descricao]}"
+          raise ResponseError, message
+        end
       end
 
       response
