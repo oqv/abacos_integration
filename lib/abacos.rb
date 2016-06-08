@@ -359,7 +359,7 @@ class Abacos
             "DadosCancelamentoPedido" => {
               "CodigoPedido" => options['number'],
               "CodigoMotivoCancelamento" => 5,
-              "MensagemCancelamento" => "Cancel"
+              "MensagemCancelamento" => options['cancel_message'] || "Cancel"
             }
           }
         )
