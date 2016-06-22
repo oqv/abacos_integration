@@ -358,7 +358,7 @@ class Abacos
             "ChaveIdentificacao" => @@key,
             "DadosCancelamentoPedido" => {
               "CodigoPedido" => options['number'],
-              "CodigoMotivoCancelamento" => 5,
+              "CodigoMotivoCancelamento" => options['cancelation_reason'],
               "MensagemCancelamento" => options['cancel_message'] || "Cancel"
             }
           }
