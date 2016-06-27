@@ -76,7 +76,8 @@ class Abacos
       "gift_card_freebie" => "CartaoPresenteBrinde",
       "delivery_time" => "PrazoEntregaPosPagamento",
       "commercialization_kind" => "ComercializacaoOutrasSaidas",
-      "seller_id" => "RepresentanteVendas"
+      "seller_id" => "RepresentanteVendas",
+      "payment_date" => "DataDoPagamento"
     }
 
     @@obj_mappings = {
@@ -120,7 +121,7 @@ class Abacos
       if attributes[:payments].size == 1 && attributes[:payments].first[:kind] == 'credit'
         @translated.delete('PrazoEntregaPosPagamento')
 
-        @translated['DataPrazoEntregaInicial'] = Abacos::Helper.parse_timestamp((attributes[:delivery_time].to_i).business_days.after(attributes[:created_at].to_datetime).to_s) 
+        @translated['DataPrazoEntregaInicial'] = Abacos::Helper.parse_timestamp((attributes[:delivery_time].to_i).business_days.after(attributes[:created_at].to_datetime).to_s)
       end
 
       @@obj_mappings.each do |k, v|

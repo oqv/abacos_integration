@@ -91,6 +91,11 @@ module AbacosIntegration
 
       order.client_code ||= order.client_cpf
 
+      # Integrate paid order directly
+      # paid_status = order_payload[:order_statuses].find { |order_status| order_status[:status] == 'paid' }
+      # order.paid_status = paid_status.present?
+      # order.payment_date = paid_status.present? ? Abacos::Helper.parse_timestamp(paid_status[:created_at]) : nil
+
       # Defaults. These are preconfigured on Abacos
       order.commercialization_kind ||= '0'
       order.seller_id = '1'
