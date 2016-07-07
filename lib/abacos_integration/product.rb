@@ -31,7 +31,6 @@ module AbacosIntegration
       parent_products.map do |p|
         {
           codigo_produto: p[:codigo_produto],
-          barcode: p[:codigo_barras],
           acao: p[:acao],
           name: p[:nome_produto],
           sku: p[:codigo_produto],
@@ -42,7 +41,7 @@ module AbacosIntegration
           family: strip(p[:descricao_familia]),
           taxons: build_taxons(p),
           taxons_ids: build_taxons_ids(p),
-          # variants: build_variants(p[:codigo_produto]),
+          variants: build_variants(p[:codigo_produto]),
           weight: p[:peso],
           height: p[:altura],
           width: p[:largura],
@@ -190,6 +189,7 @@ module AbacosIntegration
 
     def build_variants(product_id)
       variants = variants_by_product_id product_id
+      byebug if variants.length > 0
 
       variants.inject({}) do |items, v|
         sku = v[:codigo_produto]
@@ -198,6 +198,7 @@ module AbacosIntegration
           sku: sku,
           description: v[:descricao],
           options: build_options_types(v),
+          barcode: v[:codigo_barras],
           abacos: clean_up_keys(v)
         }.merge fetch_price(v[:codigo_produto])
 
