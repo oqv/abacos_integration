@@ -189,7 +189,6 @@ module AbacosIntegration
 
     def build_variants(product_id)
       variants = variants_by_product_id product_id
-      byebug if variants.length > 0
 
       variants.inject({}) do |items, v|
         sku = v[:codigo_produto]
