@@ -197,7 +197,7 @@ module AbacosIntegration
           sku: sku,
           description: v[:descricao],
           options: build_options_types(v),
-          barcode: v[:codigo_barras],
+          barcode: v[:barcode],
           abacos: clean_up_keys(v)
         }.merge fetch_price(v[:codigo_produto])
 
