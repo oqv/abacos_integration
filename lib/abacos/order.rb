@@ -118,7 +118,7 @@ class Abacos
       end
 
       # If order was paid with credits alone
-      if attributes[:payments].size == 1 && attributes[:payments].first[:kind] == 'credit'
+      if attributes[:payments].size == 1 && %w(credit multiplus).include?(attributes[:payments].first[:kind])
         @translated.delete('PrazoEntregaPosPagamento')
 
         @translated['DataPrazoEntregaInicial'] = Abacos::Helper.parse_timestamp((attributes[:delivery_time].to_i).business_days.after(attributes[:created_at].to_datetime).to_s)
