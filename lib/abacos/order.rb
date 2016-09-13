@@ -57,7 +57,7 @@ class Abacos
       "fake_invoice" => "EmitirNotaSimbolica",
       "promo_total_coupon" => "ValorCupomDesconto",
       # Dados de Entrega
-      "client_name" => "DestNome",
+      "contact" => "DestNome",
       "contact_email" => "DestEmail",
       "contact_phone" => "DestTelefone",
       "address_client_cpf" => "DestCPF",
