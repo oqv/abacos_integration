@@ -33,7 +33,7 @@ class Abacos
   # CPFouCNPJ can only have numbers
   #
   # See pre configured payment methods in Abacos to grab a valid ID for FormaPagamentoCodigo
-  # 
+  #
   class Order
     attr_reader :attributes
 
@@ -77,7 +77,8 @@ class Abacos
       "delivery_time" => "PrazoEntregaPosPagamento",
       "commercialization_kind" => "ComercializacaoOutrasSaidas",
       "seller_id" => "RepresentanteVendas",
-      "payment_date" => "DataDoPagamento"
+      "payment_date" => "DataDoPagamento",
+      "channel" => "Canal"
     }
 
     @@obj_mappings = {
@@ -87,7 +88,7 @@ class Abacos
 
     # NOTE Some setter methods might require custom logic
     #
-    # e.g. placed_on date needs to follow the format 
+    # e.g. placed_on date needs to follow the format
     #
     #   "DataVenda" => "ddmmyyyy 00:12:00.000",
 
@@ -107,7 +108,7 @@ class Abacos
       end
 
       @@mappings.each do |k, v|
-        
+
         if attributes[k.to_sym]
           instance_variable_set("@#{k}", @translated[v] = attributes[k.to_sym])
         end
