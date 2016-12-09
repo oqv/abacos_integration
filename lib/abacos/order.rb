@@ -78,7 +78,8 @@ class Abacos
       "commercialization_kind" => "ComercializacaoOutrasSaidas",
       "seller_id" => "RepresentanteVendas",
       "payment_date" => "DataDoPagamento",
-      "channel" => "Canal"
+      "channel" => "Canal",
+      "sub_channel" => "SubCanal"
     }
 
     @@obj_mappings = {
