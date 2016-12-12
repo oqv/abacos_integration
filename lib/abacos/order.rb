@@ -102,6 +102,7 @@ class Abacos
       @attributes = attributes
 
       @translated = {}
+      @translated['Anotacao2'] = attributes[:sub_channel]
 
       # Quote ID from Intelipost and delivery cost prince
       if attributes[:quote_id].present? && attributes[:shipment_cost_price].present?
