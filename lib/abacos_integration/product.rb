@@ -110,7 +110,7 @@ module AbacosIntegration
     end
 
     def products
-      @collection = fetch
+      collection
     end
 
     def categories
