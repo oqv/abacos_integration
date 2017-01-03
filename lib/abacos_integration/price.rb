@@ -13,15 +13,7 @@ module AbacosIntegration
     # abacos_id can be used by integrations what requires a reference value
     # with only numbers (id might contain other chars)
     def fetch
-      Abacos.prices_available.map do |s|
-        {
-          id: s[:codigo_produto],
-          code_abacos: s[:codigo_produto_pai],
-          price: s[:preco_tabela],
-          promotional_price: s[:preco_promocional],
-          protocolo_preco: s[:protocolo_preco]
-        }
-      end
+      Abacos.prices_available
     end
 
     def confirm(protocol)
