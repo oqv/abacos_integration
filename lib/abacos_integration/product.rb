@@ -110,7 +110,9 @@ module AbacosIntegration
     end
 
     def products
-      collection
+      collection.map do |item|
+        item.merge(fetch_price(item[:codigo_produto]))
+      end
     end
 
     def categories
