@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
   s.add_dependency "rails"
 
   s.add_dependency "sinatra"
-  s.add_dependency "tilt", "~> 1.4.1"
+  s.add_dependency "tilt"
   s.add_dependency "tilt-jbuilder"
   s.add_dependency "endpoint_base"
   # s.add_dependency "honeybadger"
